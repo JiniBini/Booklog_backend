@@ -4,5 +4,5 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class BaseException extends RuntimeException {
-    public final
+    public final BaseResponseCode baseResponseCode;
 }

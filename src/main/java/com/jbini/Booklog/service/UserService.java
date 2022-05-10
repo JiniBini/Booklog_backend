@@ -18,7 +18,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public boolean existsByUserEmail(String email) {
-        return false;
-        //return userRepository.existsByUserEmail(email).orElseThrow(() -> new BaseException(BaseResponseCode.DUPLICATE_EMAIL));
+        return userRepository.existsByUserEmail(email).orElseThrow(() -> new BaseException(BaseResponseCode.DUPLICATE_EMAIL));
     }
 }
