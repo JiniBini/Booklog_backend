@@ -1,6 +1,7 @@
 package com.jbini.Booklog.service;
 
 import com.jbini.Booklog.dto.UserResponseDto;
+import com.jbini.Booklog.dto.UserSignupRequestDto;
 import com.jbini.Booklog.entity.User;
 import com.jbini.Booklog.exception.BaseException;
 import com.jbini.Booklog.exception.BaseResponseCode;
@@ -46,5 +47,17 @@ public class UserService {
                 .stream()
                 .map(UserResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Long signUp(UserSignupRequestDto userSignupRequestDto) throws BaseException {
+        userRepository.existsByUserEmail(userSignupRequestDto.getUserEmail()).orElseThrow(() -> new BaseException(BaseResponseCode.DUPLICATE_EMAIL));
+        userSignupRequestDto.setUserPassword(passwordEncoder.encode(userSignupRequestDto.getUserPassword()));
+        try {
+            userRepository.save(userSignupRequestDto.toEntity());
+        } catch (Exception e) {
+            throw new BaseException(BaseResponseCode.FAILED_TO_SAVE_USER);
+        }
+        return userRepository.findByUserEmail(userSignupRequestDto.getUserEmail()).get().getUserId();
     }
 }
