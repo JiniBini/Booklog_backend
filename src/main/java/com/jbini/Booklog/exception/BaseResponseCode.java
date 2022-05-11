@@ -22,7 +22,17 @@ public enum BaseResponseCode {
     /**
      * 404 NOT FOUND
      */
-    FAILED_TO_SAVE_USER(HttpStatus.NOT_FOUND, "사용자를 등록에 실패했습니다.");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."),
+
+    /**
+     * 404 NOT FOUND
+     */
+    FAILED_TO_SAVE_USER(HttpStatus.NOT_FOUND, "사용자를 등록에 실패했습니다."),
+
+    /**
+     * 405 Method Not Allowed
+     */
+    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "허용되지 않은 메서드입니다.");
 
     private HttpStatus httpStatus;
     private String message;

@@ -1,5 +1,6 @@
 package com.jbini.Booklog.service;
 
+import com.jbini.Booklog.dto.UserRequestDto;
 import com.jbini.Booklog.dto.UserResponseDto;
 import com.jbini.Booklog.dto.UserSignupRequestDto;
 import com.jbini.Booklog.entity.User;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -59,5 +61,32 @@ public class UserService {
             throw new BaseException(BaseResponseCode.FAILED_TO_SAVE_USER);
         }
         return userRepository.findByUserEmail(userSignupRequestDto.getUserEmail()).get().getUserId();
+    }
+    public Optional<User> update(UserRequestDto userRequestDto) throws BaseException {
+        Optional<User> user = userRepository.findById(userRequestDto.getUserId());
+        try {
+            user.ifPresent(selectUser -> {
+                selectUser.setUserNickname(userRequestDto.getUserNickname());
+//                selectUser.setUserFilename(userRequestDto.getUserFilename());
+                userRepository.save(selectUser);
+            });
+        } catch (Exception e) {
+            throw new BaseException(BaseResponseCode.METHOD_NOT_ALLOWED);
+        }
+        return user;
+    }
+
+    public Long delete(Long id) throws BaseException {
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new BaseException(BaseResponseCode.USER_NOT_FOUND);
+        }
+        return id;
+    }
+
+
+    public User getUserByUserEmail(String userEmail) {
+        return userRepository.findByUserEmail(userEmail).orElseThrow(()-> new BaseException(BaseResponseCode.USER_NOT_FOUND));
     }
 }
