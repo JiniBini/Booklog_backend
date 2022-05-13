@@ -36,6 +36,14 @@ dependencies {
 	implementation 'com.oracle.database.security:osdt_cert'
 	implementation 'com.oracle.database.security:oraclepki'
 	implementation 'com.oracle.database.security:osdt_core'
+
+	//junit5 test
+	testImplementation(platform("org.junit:junit-bom:5.8.2"))
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+		because("Only needed to run tests in a version of IntelliJ IDEA that bundles older versions")
+	}
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
 }
 
 tasks.named('test') {
