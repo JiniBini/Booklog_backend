@@ -63,7 +63,7 @@ public class UserService {
         return userRepository.findByUserEmail(userSignupRequestDto.getUserEmail()).get().getUserId();
     }
     public Optional<User> update(UserRequestDto userRequestDto) throws BaseException {
-        Optional<User> user = userRepository.findById(userRequestDto.getUserId());
+        Optional<User> user = userRepository.findByUserEmail(userRequestDto.getUserEmail());
         try {
             user.ifPresent(selectUser -> {
                 selectUser.setUserNickname(userRequestDto.getUserNickname());
@@ -74,6 +74,16 @@ public class UserService {
             throw new BaseException(BaseResponseCode.METHOD_NOT_ALLOWED);
         }
         return user;
+    }
+
+    public Long create(UserRequestDto userRequestDto) throws BaseException{
+        try {
+            User user = userRequestDto.toEntity();
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new BaseException(BaseResponseCode.FAILED_TO_SAVE_USER);
+        }
+        return userRepository.findByUserEmail(userRequestDto.getUserEmail()).get().getUserId();
     }
 
     public Long delete(Long id) throws BaseException {

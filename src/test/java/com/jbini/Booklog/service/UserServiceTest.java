@@ -1,5 +1,6 @@
 package com.jbini.Booklog.service;
 
+import com.jbini.Booklog.dto.UserRequestDto;
 import com.jbini.Booklog.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,6 +45,27 @@ class UserServiceTest {
 
     @Test
     void signUp() {
+        //given
+
+
+        //mocking
+
+        //when
+
+        //then
+    }
+
+    @Test
+    void create(){
+        //given
+        UserRequestDto userRequestDto;
+
+
+        //mocking
+
+        //when
+
+        //then
     }
 
     @Test
