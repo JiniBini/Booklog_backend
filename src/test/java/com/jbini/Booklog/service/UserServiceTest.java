@@ -58,6 +58,24 @@ class UserServiceTest {
 
     @Test
     void findUserByEmail() {
+        //given
+        User user = new User("servicetest@email.com","TestMan","test","testNick","");
+
+        Long fakeUserId = 1l;
+        String userEmail = "servicetest@email.com";
+        ReflectionTestUtils.setField(user, "userId", fakeUserId);
+        ReflectionTestUtils.setField(user, "userEmail", userEmail);
+
+
+        //mocking
+        given(userRepository.findByUserEmail(userEmail)).willReturn(Optional.ofNullable(user));
+
+        //when
+        Long newUserId = userService.findUserByEmail(userEmail).getUserId();
+
+        //then
+        assertEquals(fakeUserId, newUserId);
+        verify(userRepository).findByUserEmail(userEmail);
     }
 
     @Test
