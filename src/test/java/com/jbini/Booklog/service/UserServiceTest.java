@@ -128,6 +128,15 @@ class UserServiceTest {
 
     @Test
     void update() {
+        //given
+//        UserRequestDto userRequestDto;
+
+
+        //mocking
+
+        //when
+
+        //then
     }
 
     @Test
